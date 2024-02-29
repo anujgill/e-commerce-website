@@ -1,0 +1,134 @@
+
+body {
+    font-family: 'Arial', sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+h1 {
+    color: #333;
+    text-align: center;
+}
+
+.rightAlign {
+    float: right;
+}
+
+button {
+    padding: 10px 15px;
+    background-color: #4caf50;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+button:hover {
+    background-color: #45a049;
+}
+
+#admin {
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    margin: 20px;
+}
+
+form.alignCenter {
+    display: flex;
+    /* flex-direction: column; */
+    align-items: center;
+}
+
+input, button {
+    padding: 10px;
+    margin: 15px;
+    box-sizing: border-box;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    outline: none;
+}
+
+label {
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+#pTable {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+#pTable th, #pTable td {
+    border: 1px solid #dddddd;
+    padding: 12px;
+    text-align: center;
+}
+
+#pTable th {
+    background-color: #f2f2f2;
+}
+
+#pTableBody tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+#pTableBody tr:hover {
+    background-color: #d3e0ea;
+}
+
+.modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+}
+
+.modal-content {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: #fefefe;
+    padding: 20px;
+    border: 1px solid #888;
+    max-width: 400px;
+}
+
+.close {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    font-size: 20px;
+    cursor: pointer;
+}
+
+.close:hover {
+    color: red;
+}
+
+.alignCenter {
+    text-align: center;
+}
+
+
+
+
+/* Adjust as needed for responsiveness */
+@media (max-width: 768px) {
+    form.alignCenter {
+        width: 80%;
+        margin: auto;
+    }
+
+    #admin {
+        width: 80%;
+        margin: auto;
+    }
+}

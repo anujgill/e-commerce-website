@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="index.css">
+    <title>Document</title>
+</head>
+<body>
+    <h1 id="welcome"></h1>
+    <button class="rightAlign" id="logout" onclick="logOut()">Logout</button> 
+    <button class="rightAlign" onclick="goToCart()" id="cartButton" style="display: none;">Cart</button>
+    <div id="admin">
+    <h1 class="alignCenter"> PRODUCT LIST </h1>
+    <form class="alignCenter">
+        <input id="pname" type="text" placeholder="Product Name...">
+        <input id="pdesc" type="text" placeholder="Product Description...">
+        <input id="pprice" type="number" placeholder="Price...">
+        <input id="pquantity" type="number" placeholder="Quantity...">
+    
+        <button onclick="addProducts()">ADD</button>
+    </form>
+    </div>
+    <table id="pTable" class="alignCenter">
+        <thead>
+        <tr>
+            <th>Name</th>
+            <th>Description</th>
+            <th>Price</th>
+            <th>Quantity</th>
+            <th>Actions</th>
+        </tr>
+        </thead>
+        <tbody id="pTableBody"></tbody>
+    </table>
+    <button id="showMoreButton"  onclick="showMoreProducts()">Show More</button>  
+
+    <div id="updateModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeUpdateModal()">&times;</span>
+            <label for="updatedName">Updated Name:</label>
+            <input type="text" id="updatedName"><br>
+            <label for="updatedDesc">Updated Description:</label>
+            <input type="text" id="updatedDesc"><br>
+            <label for="updatedPrice">Updated Price:</label>
+            <input type="number" id="updatedPrice"><br>
+            <label for="updatedQuantity">Updated Quantity:</label>
+            <input type="number" id="updatedQuantity"><br>
+            <button onclick="updateP()" class="alignCenter">Update</button>
+        </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/uuid@8.3.2/dist/umd/uuidv4.min.js"></script>
+    <script src="index.js"></script>
+
+</body>
+</html>

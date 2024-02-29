@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #f0f0f0;
+        }
+
+        h1,h2 {
+            color: #333;
+            text-align: center;
+        }
+
+        #cartTable {
+            width: 100%;
+            /* border-collapse: collapse; */
+            margin-top: 20px;
+        }
+
+        #cartTable th, #cartTable td {
+            border: 1px solid #dddddd;
+            padding: 12px;
+            text-align: center;
+            
+        }
+
+        #cartTable th {
+            background-color: #f2f2f2;
+        }
+
+        #ctableBody tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+
+        #ctableBody tr:hover {
+            background-color: #d3e0ea;
+        }
+
+        button {
+            padding: 8px 12px;
+            background-color: #4caf50;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+
+        #cartTable td button {
+            margin: 0 4px;
+        }
+
+        #ctableBody td {
+            padding: 12px;
+        }
+
+        #ctableBody td button {
+            padding: 8px 12px;
+        }
+
+        #ctableBody td button:hover {
+            background-color: #45a049;
+        }
+
+        #cartTable {
+            display: none;
+        }
+
+    </style>
+</head>
+<body>
+    <h1 id="welcome">q</h1>
+    <h2 id="empty"></h2>
+    <table id="cartTable" border="1">
+        <thead>
+            <th>Name</th>
+            <th>Description</th>
+            <th>Price</th>
+            <th>Quantity</th>
+            <th>Actions</th>
+            <th>Subtotal</th>
+            <th>Actions</th>
+        </thead>
+        <tbody id="ctableBody">
+
+        </tbody>
+    </table>
+    <script>
+        const currentUser = JSON.parse(sessionStorage.getItem('userDetails'));
+        document.getElementById('welcome').innerText = `Welcome ${currentUser.name}`;
+        const ctableBody = document.getElementById('ctableBody');
+        const cart = JSON.parse(localStorage.getItem('cart')) || {};
+        const userCart = cart[currentUser.name] || [];
+        const products = JSON.parse(localStorage.getItem('products')) || [];
+        function displayCart(){
+            if(userCart.length ==0){
+                document.getElementById('cartTable').style.display = 'none';
+                document.getElementById('empty').innerText = 'Pls Add something in cart';
+                return;
+            }else{
+                document.getElementById('cartTable').style.display = 'block';
+                document.getElementById('empty').innerText = '  ';
+            }
+            ctableBody.innerHTML = '';
+            let total = 0;
+            userCart.forEach((element,index) => {
+                
+                total += element.price*element.quantity;
+                const productMatch = products.find(pro =>{
+                    return pro.productId === element.productId;
+                });
+                if(element.quantity>productMatch.quantity){
+                    userCart[index].quantity = productMatch.quantity;
+                    saveToStorage();
+                }
+                const row = document.createElement('tr');
+                const inc = `<button onclick="inc(${index})">+</button>`;
+                const dic = `<button onclick="dic(${index})">-</button>`;
+                const rem = `<button onclick="rem(${index})">Remove</button>`;
+                row.innerHTML = 
+                    `
+                        <td>${element.name}</td>
+                        <td>${element.desc}</td>
+                        <td>Rs.${element.price}</td>
+                        <td>${element.quantity}/${productMatch.quantity}</td>
+                        <td>${inc}${dic}</td>
+                        <td>Rs.${element.price*element.quantity}</td>
+                        <td>${rem}</td>
+                    `;
+                ctableBody.appendChild(row);
+            });
+            const row = document.createElement('tr');
+            row.innerHTML = 
+                    `
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <th>Total:</th>
+                        <th>Rs.${total}</th>
+                    `;
+                ctableBody.appendChild(row);
+
+        }
+        
+        function inc(index) {
+            const findPro = products.find(pro =>{
+                return pro.productId == userCart[index].productId;
+                });
+            if(userCart[index].quantity + 1 > findPro.quantity){
+                alert("out of stock");
+                return;
+            }
+            else{
+                userCart[index].quantity++;
+            }
+            saveToStorage();
+            displayCart();
+        }
+
+        function dic(index) {
+            if(userCart[index].quantity>0){
+                userCart[index].quantity--;
+                if(userCart[index].quantity==0){
+                    userCart.splice(index, 1);
+                }
+            }
+            saveToStorage()
+            displayCart();
+        }
+
+        function rem(index){
+            userCart.splice(index, 1);
+            saveToStorage();
+            displayCart();
+        }
+
+        // console.log(userCart);
+
+
+        function saveToStorage() {
+            localStorage.setItem('cart',JSON.stringify(cart));
+        }
+        displayCart();
+    </script>
+</body>
+</html>
